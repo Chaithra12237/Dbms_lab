@@ -54,9 +54,7 @@ INSERT INTO `add_room` (`id`, `roomtype`, `numroom`, `numbed`, `bedtype`, `facil
 
 CREATE TABLE `admin` (
   `id` int(5) NOT NULL,
-  `fullname` varchar(20) NOT NULL,
   `username` varchar(30) NOT NULL,
-  `email` varchar(30) NOT NULL,
   `password` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -64,9 +62,8 @@ CREATE TABLE `admin` (
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`, `fullname`, `username`, `email`, `password`) VALUES
-(1, '', 'admin', '', 'admin'),
-(3, 'abc sharma', 'abcd', 'abc@gmail.com', '1234');
+INSERT INTO `admin` (`id`, `username`, `password`) VALUES
+(1, 'admin', 'admin');
 
 -- --------------------------------------------------------
 
@@ -75,7 +72,7 @@ INSERT INTO `admin` (`id`, `fullname`, `username`, `email`, `password`) VALUES
 --
 
 CREATE TABLE `book` (
-  `id` int(5) NOT NULL,
+  `b_id` int(5) NOT NULL,
   `category` varchar(20) NOT NULL,
   `checkin` date NOT NULL,
   `checkout` date NOT NULL,
@@ -88,11 +85,8 @@ CREATE TABLE `book` (
 -- Dumping data for table `book`
 --
 
-INSERT INTO `book` (`id`, `category`, `checkin`, `checkout`, `name`, `phone`, `status`) VALUES
-(7, 'Duplex', '2020-06-14', '2020-06-26', 'ad', '987456', 'True'),
-(8, 'Duplex', '2020-06-14', '2020-06-19', 'a', '9874563214', 'True'),
-(9, 'Duplex', '2020-06-14', '2020-06-19', 'a', '9874563214', 'True'),
-(10, 'Family', '2020-06-21', '2020-06-23', 'admin1', '965822', 'True');
+INSERT INTO `book` (`b_id`, `category`, `checkin`, `checkout`, `name`, `phone`, `status`) VALUES
+(1, 'Duplex', '2020-06-14', '2020-06-26', 'ad', '987456', 'True');
 
 --
 -- Indexes for dumped tables
@@ -101,6 +95,14 @@ INSERT INTO `book` (`id`, `category`, `checkin`, `checkout`, `name`, `phone`, `s
 --
 -- Indexes for table `add_room`
 --
+CREATE TABLE `payments` (
+  `p_id` int(5) NOT NULL,
+  `b_id` int(20) NOT NULL,
+  `card_number` int(20) NOT NULL,
+  `cvc` int(20) NOT NULL,
+  `expiration` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 ALTER TABLE `add_room`
   ADD PRIMARY KEY (`id`);
 
@@ -114,12 +116,13 @@ ALTER TABLE `admin`
 -- Indexes for table `book`
 --
 ALTER TABLE `book`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`b_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
-
+ALTER TABLE `payments`
+  ADD PRIMARY KEY (`p_id`);
 --
 -- AUTO_INCREMENT for table `add_room`
 --
@@ -136,7 +139,9 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `book`
 --
 ALTER TABLE `book`
-  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `b_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+ALTER TABLE `payments`
+  MODIFY `p_id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
