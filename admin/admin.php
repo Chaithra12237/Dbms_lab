@@ -25,15 +25,7 @@
             <button class="navbar-toggler" type="button"data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button> 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav">
-                    <li class="navbar-item ">
-                        <a class="nav-link" href="index.php">Home</a>
-                    </li>
-                    <li class="navbar-item">
-                        <a class="nav-link" href="room.php">Room Facilities</a>
-                    </li>
-                    <li class="navbar-item">
-                        <a class="nav-link" href="reservation.php">Online Reservation</a>
-                    </li>
+                    
                     <li class="navbar-item active">
                         <a class="nav-link" href="admin.php">Admin</a>
                     </li>
@@ -70,7 +62,7 @@
                         <div class="content">
                             
                             <li><a href="show_book.php">Show All Booked Rooms</a> </li>
-                            <li><a href="editbook.php">Edit Booked Room</a> </li>
+
                         </div>
                     </div>
                 </div>

@@ -1,7 +1,8 @@
 <?php
 include('db.php');
-$type=$_GET['roomtype'];
-
+$type=$_GET['type'];
+$in=$_GET['in'];
+$out=$_GET['out'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,27 +29,34 @@ $type=$_GET['roomtype'];
             <div class="row">
                 <div class="col-12">             
                     <div class="text_clr p-4">
-                        <h3 class="text-center">Book Now: <?php echo $type; ?></h3>
+                        <h3 class="text-center">Book Now: </h3>
                         <hr class="bg-secondary">
                         <form action="" method="post">
-                            <div class="form-group">
-                                <label>Check In :</label>
-                                <input type="date" class="form-control" name="in" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Check Out :</label>
-                                <input type="date" class="form-control" name="out" required>
-                            </div>
+                            
                             <div class="form-group">
                                 <label>Enter Your Full Name :</label>
                                 <input type="text" class="form-control" name="name"required>
                             </div>
                             <div class="form-group">
                                 <label>Enter Your Phone Number :</label>
-                                <input type="tel" class="form-control" name="phone" required minlength="9" maxlength="13">
-                            </div>      
+                                <input type="tel" class="form-control" name="phone" required minlength="10" maxlength="13">
+                            </div>   
+                            <div class="form-group">
+                                <label>Enter Your email  :</label>
+                                <input type="text" class="form-control" name="email"required>
+
+                            </div>
+                            <div class="form-group">
+                                <label>Enter Your Address :</label>
+                                <textarea class="form-control" name="address" rows="4" cols="5"required></textarea>
+                            </div>   
+                            <div class="form-group">
+                                <label>Enter Number of rooms :</label>
+                                <input type="text" class="form-control" name="room" required>
+                            </div>  
            
-           <button class="btn btn-primary float-right" type="submit"  name="payment">Go to payment</button>
+           <button class="btn btn-primary float-right" type="submit"  name="book"> Book & Go to payment</button>
+
 <!-- onclick="document.location='payment.php'" -->
                             <a href="index.php"><span class="text-primary">Back To Home</span></a>
                             
@@ -60,22 +68,26 @@ $type=$_GET['roomtype'];
         </div>
     </section>
 <?php
-if(isset($_REQUEST['payment'])){
-    $in=$_POST['in'];
-    $out=$_POST['out'];
+if(isset($_REQUEST['book'])){
     $fname=$_POST['name'];
     $tel=$_POST['phone'];
-    $qry="INSERT INTO `book`(`category`, `checkin`, `checkout`, `name`, `phone`, `status`) VALUES ('$type','$in','$out','$fname','$tel','True');";
+    $email=$_POST['email'];
+    $address=$_POST['address'];
+    $room=$_POST['room'];
+
+    
+    $qry="INSERT INTO `book`(`category`, `name`,`checkin`,`checkout`,`phone`,`email`,`address`, `room`, `status`) VALUES ('$type','$fname','$in','$out','$tel','$email','$address','$room','True');";
     
     $run=mysqli_query($conn,$qry);
     if(!$run){ ?>
-        <script>document.getElementById("demo").innerHTML = "Add is not Done";</script>
+        <script>document.getElementById("demo").innerHTML = "Booking is not Done";</script>
 <?php
     }
     else{ ?>
         
-        <script>document.getElementById("demo").innerHTML = "Add is successful";
+        <script>document.getElementById("demo").innerHTML = "Booking is successful";
         </script>
+        }
 <?php
 
         $select_query = "SELECT * FROM `book` WHERE `name`='$fname' AND `phone`='$tel'";
@@ -91,8 +103,9 @@ if(isset($_REQUEST['payment'])){
     header("Location: payment.php?b_id=$b_id&type=$type");
     }
 
-    
-} ?>
+
+}?>
+
 
     <script src="jquery-3.5.1.slim.min.js"></script>
 <script src="popper.min.js"></script>

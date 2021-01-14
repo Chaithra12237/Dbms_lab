@@ -19,14 +19,13 @@
                         <a class="nav-link" href="index.php">Home</a>
                     </li>
                     <li class="navbar-item active">
-                        <a class="nav-link" href="room.php">Room Facilities</a>
+                        <a class="nav-link" href="room.php">Room Facilities and Reservation</a>
                     </li>
-                    <li class="navbar-item">
-                        <a class="nav-link" href="reservation.php">Online Reservation</a>
-                    </li>
+
                     <li class="navbar-item">
                         <a class="nav-link" href="cancel.php">Cancel Booking</a>
                     </li>
+                    
                     <li class="navbar-item">
                         <a class="nav-link" href="admin/admin-login.php">Admin</a>
                     </li>
@@ -54,12 +53,12 @@
                             <div class="content">
                                 <p>No of Beds: <?php echo $data['numbed'];?> <?php echo $data['bedtype'];?>  bed.</p>
                                 <p>Facilities: <?php echo $data['facility'];?>.</p>
-                                <p>Price: <?php echo $data['price'];?> tk/night.</p>
+                                <p>Price: <?php echo $data['price'];?> Rs./day.</p>
                             </div>
                             </div>
                         </div>
                         <div class="col-3 ">
-                            <a href="book.php?roomtype=<?php echo $data['roomtype']; ?>"><button class="btn btn-primary ">Book Now</button></a>
+                            <a href="reservation.php?roomtype=<?php echo $data['roomtype'];?>"><button class="btn btn-primary ">Book Now</button></a>
                         </div>
                     
                     </div>

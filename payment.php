@@ -41,11 +41,11 @@ $b_id = $_GET['b_id'];
                             </div>
                             <div class="form-group">
                                 <label>Card number</label>
-                                <input type="number" class="form-control" name="card_num" required>
+                                <input type="tel" class="form-control" name="card_num" required minlength="16" maxlength="16">
                             </div>
                             <div class="form-group">
                                 <label>cvc :</label>
-                                <input type="number" class="form-control" name="cvc"required>
+                                <input type="tel" class="form-control" name="cvc"required minlength="3" maxlength="3">
                             </div>
                             <div class="form-group">
                                 <label>Expiration date:</label>
@@ -54,7 +54,7 @@ $b_id = $_GET['b_id'];
 
            
 
-                            <a href="index.php"><span class="text-primary">Back To Home</span></a>
+                            <a href="index.php"><span class="text-primary">Back To Home</span></a>&nbsp; &nbsp;
                             <button class="btn btn-primary float-right" type="submit" name="book">Book Now</button>
                             <p id="demo"></p>
                         </form>                       

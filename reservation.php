@@ -1,3 +1,8 @@
+<?php
+include('db.php');
+$type=$_GET['roomtype'];
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +11,8 @@
     <title>Hotel</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    
 </head>
 <body>
     <header class="mx-lg-5 mx-md-4">       
@@ -18,11 +25,9 @@
                         <a class="nav-link" href="index.php">Home</a>
                     </li>
                     <li class="navbar-item ">
-                        <a class="nav-link" href="room.php">Room Facilities</a>
+                        <a class="nav-link" href="room.php">Room Facilities and Reservation</a>
                     </li>
-                    <li class="navbar-item active">
-                        <a class="nav-link" href="reservation.php">Online Reservation</a>
-                    </li>
+
                     <li class="navbar-item">
                         <a class="nav-link" href="cancel.php">Cancel Booking</a>
                     </li>
@@ -43,22 +48,32 @@
                 <div class="col-12">
                     <div class="bg p-4 rounded width_con">                      
                         <div class="text_clr">
-                            <form action="" method="post">
-                                <p>Check In : <span style="visibility:hidden">a</span>  <input type="date"></p>
-                                <p>Check out : <input type="date"></p>
+                        
+                            <form action="book.php" method="get">
+                                <p>Room type : <input type="text" name="type" value="<?php echo $type;?>"> </p>
+                            
+    
+    
+            
+                              <p>Check In :  <span style="visibility:hidden" >a</span> <input  required type="date" name="in" id="datepicker" ></p>
+                                <p>Check out : <input type="date" class="w8em format-d-m-y highlight-days-67 range-low-today" name="out"required></p>
+                                <input type="hidden" name="result" id="result" /><br>
                                 <div class="text-center">
-                                    <button class="btn btn-primary" type="submit" name="show">Check Availability</button>
+                                  <span>  <input type="submit" class="btn btn-primary" type="submit" name="show" id="ed" value="Check Availability"></span>
                                 </div>
                             </form>
-                            
+                      
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+
     <?php
     if(isset($_POST['show'])){
+    
         ?>
         <section>
         <div class="container mb-5">
@@ -81,10 +96,12 @@
                             </div>
                         </div>
                         <div class="col-3 ">
-                            <a href="book.php?roomtype=<?php echo $data['roomtype']; ?>"><button class="btn btn-primary ">Book Now</button></a>
+                        <a href="book.php?roomtype=<?php echo $data['roomtype'];?>"><button class="btn btn-primary " name="book">Book Now</button></a>
+                              
                         </div>
-                    
+
                     </div>
+                    
                             <?php
                         }
                 }
@@ -94,7 +111,21 @@
             ?>
         </div>
     </section>
+    --------------------
+                    <?php/*
+if(isset($_REQUEST['book'])){
+   $in=$_POST['in'];
+   $out=$_POST['out'];
+   // $qry="INSERT INTO `book`( `checkin`, `checkout`) VALUES ('$in','$out');";
+    
+    //$run=mysqli_query($conn,$qry);
+ header("Location: book.php?checkin=$in&checkout=$out");
+}
+   */?>
+   
+   -----------------------
         <?php
+        
     }
     ?>
 

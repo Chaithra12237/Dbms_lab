@@ -45,7 +45,7 @@ include 'db.php';
                             </div>
                             
                             <a href="index.php"><span class="text-primary">Back To Home</span></a>
-                            <button class="btn btn-primary float-right" type="submit" name="delete">Cancel</button>
+                            <button class="btn btn-primary float-right" type="submit" name="delete">OK</button>
                             <p id="demo"></p>
                         </form>                       
                     </div>
