@@ -40,6 +40,10 @@ $b_id = $_GET['b_id'];
                     
                             </div>
                             <div class="form-group">
+                                <label>Name on Card:</label>
+                                <input type="text" class="form-control" name="names" required>
+                            </div>
+                            <div class="form-group">
                                 <label>Card number</label>
                                 <input type="tel" class="form-control" name="card_num" required minlength="16" maxlength="16">
                             </div>
@@ -51,7 +55,7 @@ $b_id = $_GET['b_id'];
                                 <label>Expiration date:</label>
                                 <input type="date" class="form-control" name="exp" required>
                             </div>
-
+                            
            
 
                             <a href="index.php"><span class="text-primary">Back To Home</span></a>&nbsp; &nbsp;
@@ -66,11 +70,11 @@ $b_id = $_GET['b_id'];
 
 <?php
 if(isset($_POST['book'])){
-
+    $name=$_POST['names'];
     $card_num=$_POST['card_num'];
     $cvc=$_POST['cvc'];
     $exp=$_POST['exp'];
-    $qry1="INSERT INTO `payments`(`card_number`,`b_id`, `cvc`, `expiration`) VALUES('$card_num','$b_id','$cvc','$exp');";
+    $qry1="INSERT INTO `payments`(`names`,`card_number`,`b_id`, `cvc`, `expiration`) VALUES('$name','$card_num','$b_id','$cvc','$exp');";
     $run=mysqli_query($conn,$qry1);
     $b_id=$_GET['b_id'];
     

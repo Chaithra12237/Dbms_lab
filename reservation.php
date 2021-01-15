@@ -12,7 +12,26 @@ $type=$_GET['roomtype'];
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script type="text/javascript">
+	$(document).ready(function(){
+		$('#dt').change(function(){
+			
+				if($('#dt').val()<"<?php echo date('Y-m-d'); ?>"){ 
+					alert('Invalid Date');
+					$('#dt').val('');
+				}
+				});
     
+		$('#ds').change(function(){
+			
+				if($('#ds').val()<"<?php echo date('Y-m-d'); ?>"){ 
+					alert('Invalid Date');
+					$('#ds').val('');
+				}
+				});
+    }); 
+</script>
 </head>
 <body>
     <header class="mx-lg-5 mx-md-4">       
@@ -49,37 +68,44 @@ $type=$_GET['roomtype'];
                     <div class="bg p-4 rounded width_con">                      
                         <div class="text_clr">
                         
-                            <form action="book.php" method="get">
-                                <p>Room type : <input type="text" name="type" value="<?php echo $type;?>"> </p>
+                            <form action="" method="post">
                             
-    
-    
-            
-                              <p>Check In :  <span style="visibility:hidden" >a</span> <input  required type="date" name="in" id="datepicker" ></p>
-                                <p>Check out : <input type="date" class="w8em format-d-m-y highlight-days-67 range-low-today" name="out"required></p>
-                                <input type="hidden" name="result" id="result" /><br>
+                                <p>Room type : <input type="text" name="type" value="<?php echo $type;?>"></p>
+                            
+ 
+                              <p>Check In :  <span style="visibility:hidden" >a</span> <input  type="date" name="in" id="dt" required="required"></p>
+                                <p>Check out : <input type="date" id="ds" name="out"required></p>
+                            
                                 <div class="text-center">
-                                  <span>  <input type="submit" class="btn btn-primary" type="submit" name="show" id="ed" value="Check Availability"></span>
+                                  <span><input type="submit" class="btn btn-primary" type="submit" name="show" id="ed" value="Check Availability"></span>
                                 </div>
+                                
+	
                             </form>
-                      
+                    
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
+    
 
     <?php
     if(isset($_POST['show'])){
-    
+$in=$_POST['in'];
+$out=$_POST['out'];
+if($in>$out)
+{
+    echo "<script> alert('Please Enter valid date');</script>"; 
+}
+else{
         ?>
         <section>
         <div class="container mb-5">
             <?php
                 include('db.php');
-                $qry="SELECT * FROM `add_room`;";
+                $qry="SELECT * FROM `add_room` where `numroom`>0;";
                 $run=mysqli_query($conn,$qry);
                 if(mysqli_num_rows($run)>0){
                     while($data=mysqli_fetch_assoc($run)){
@@ -96,7 +122,7 @@ $type=$_GET['roomtype'];
                             </div>
                         </div>
                         <div class="col-3 ">
-                        <a href="book.php?roomtype=<?php echo $data['roomtype'];?>"><button class="btn btn-primary " name="book">Book Now</button></a>
+                        <a href="book.php?roomtype=<?php echo $data['roomtype'];?>&in=<?php echo $in;?>&out=<?php echo $out;?>" ><button class="btn btn-primary " name="book">Book Now</button></a>
                               
                         </div>
 
@@ -107,7 +133,7 @@ $type=$_GET['roomtype'];
                 }
                 else{
                     echo "No Rooms";
-                }
+                }}
             ?>
         </div>
     </section>
@@ -128,7 +154,7 @@ if(isset($_REQUEST['book'])){
         
     }
     ?>
-
+ 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
     <script src="js/jquery-3.5.1.slim.min.js"></script>
 <script src="js/popper.min.js"></script>

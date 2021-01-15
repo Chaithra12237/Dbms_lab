@@ -1,6 +1,6 @@
 <?php
 include('db.php');
-$type=$_GET['type'];
+$type=$_GET['roomtype'];
 $in=$_GET['in'];
 $out=$_GET['out'];
 ?>
@@ -43,7 +43,7 @@ $out=$_GET['out'];
                             </div>   
                             <div class="form-group">
                                 <label>Enter Your email  :</label>
-                                <input type="text" class="form-control" name="email"required>
+                                <input type="email" class="form-control" name="email"required>
 
                             </div>
                             <div class="form-group">
@@ -83,11 +83,33 @@ if(isset($_REQUEST['book'])){
         <script>document.getElementById("demo").innerHTML = "Booking is not Done";</script>
 <?php
     }
-    else{ ?>
+    else{//<script>document.getElementById("demo").innerHTML = "Booking is successful";
+        //</script> 
+        ?>
         
-        <script>document.getElementById("demo").innerHTML = "Booking is successful";
-        </script>
+        
         }
+
+        <?php
+        $select= "SELECT `numroom` FROM `add_room` where roomtype='$type'";
+        
+        
+        $run=mysqli_query($conn,$select);
+        while($row=mysqli_fetch_assoc($run)){
+            $numroom=$row['numroom'];}
+        if($run){
+            if($numroom<$room)
+            {
+                echo "<script> alert('$room rooms not available');</script>";
+            
+            }
+            else
+            {
+                $qry="UPDATE `add_room` SET `numroom`=$numroom-$room where roomtype='$type'" ;
+               $runs=mysqli_query($conn,$qry);
+            
+        
+        ?>
 <?php
 
         $select_query = "SELECT * FROM `book` WHERE `name`='$fname' AND `phone`='$tel'";
@@ -103,7 +125,7 @@ if(isset($_REQUEST['book'])){
     header("Location: payment.php?b_id=$b_id&type=$type");
     }
 
-
+    }}
 }?>
 
 
