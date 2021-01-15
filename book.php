@@ -54,7 +54,15 @@ $out=$_GET['out'];
                                 <label>Enter Number of rooms :</label>
                                 <input type="text" class="form-control" name="room" required>
                             </div>  
-           
+                            <div class="form-group">
+                                <label>Select payment mode :</label>
+                                <select name ="payment" required>
+                                <option value="">Choose</option>
+                                <option value="dc">Debit card</option>
+                                <option value="cc">Credit card</option>
+                                <option value="op">Offline Payment</option>
+                                </select>
+                            </div>
            <button class="btn btn-primary float-right" type="submit"  name="book"> Book & Go to payment</button>
 
 <!-- onclick="document.location='payment.php'" -->
@@ -74,23 +82,11 @@ if(isset($_REQUEST['book'])){
     $email=$_POST['email'];
     $address=$_POST['address'];
     $room=$_POST['room'];
-
+$mode=$_POST['payment'];
     
-    $qry="INSERT INTO `book`(`category`, `name`,`checkin`,`checkout`,`phone`,`email`,`address`, `room`, `status`) VALUES ('$type','$fname','$in','$out','$tel','$email','$address','$room','True');";
     
-    $run=mysqli_query($conn,$qry);
-    if(!$run){ ?>
-        <script>document.getElementById("demo").innerHTML = "Booking is not Done";</script>
-<?php
-    }
-    else{//<script>document.getElementById("demo").innerHTML = "Booking is successful";
-        //</script> 
-        ?>
+    
         
-        
-        }
-
-        <?php
         $select= "SELECT `numroom` FROM `add_room` where roomtype='$type'";
         
         
@@ -100,33 +96,40 @@ if(isset($_REQUEST['book'])){
         if($run){
             if($numroom<$room)
             {
-                echo "<script> alert('$room rooms not available');</script>";
+                echo "<script> alert('$room rooms not available...only $numroom rooms are available');</script>";
             
             }
             else
             {
+                $qry="INSERT INTO `book`(`category`, `name`,`checkin`,`checkout`,`phone`,`email`,`address`, `room`,`payment_mode`, `status`) VALUES ('$type','$fname','$in','$out','$tel','$email','$address','$room','$mode','True');";
+    
+                $run=mysqli_query($conn,$qry);
                 $qry="UPDATE `add_room` SET `numroom`=$numroom-$room where roomtype='$type'" ;
                $runs=mysqli_query($conn,$qry);
             
-        
-        ?>
-<?php
 
-        $select_query = "SELECT * FROM `book` WHERE `name`='$fname' AND `phone`='$tel'";
-        $query = mysqli_query($conn,$select_query);
-        if(!$query){
-            echo 'No Records';
-        }else{
-            while($row=mysqli_fetch_assoc($query)){
-                $b_id=$row['b_id'];
+                $select_query = "SELECT * FROM `book` WHERE `name`='$fname' AND `phone`='$tel'";
+                $query = mysqli_query($conn,$select_query);
+                if(!$query){
+                    echo 'No Records';
+                }else{
+                    while($row=mysqli_fetch_assoc($query)){
+                        $b_id=$row['b_id'];
+                    }
+                }
+                $pay=$_POST['payment'];
+                if($pay == 'op')
+                {
+                    echo "<script> alert('Booking successful and your booking id is $b_id');</script>";
+            
+                }
+                else{
+                    header("Location: payment.php?b_id=$b_id&type=$type");
+                }
             }
-        }
-        
-    header("Location: payment.php?b_id=$b_id&type=$type");
-    }
 
     }}
-}?>
+?>
 
 
     <script src="jquery-3.5.1.slim.min.js"></script>

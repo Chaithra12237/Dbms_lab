@@ -54,6 +54,7 @@
                                 <p>No of Beds: <?php echo $data['numbed'];?> <?php echo $data['bedtype'];?>  bed.</p>
                                 <p>Facilities: <?php echo $data['facility'];?>.</p>
                                 <p>Price: <?php echo $data['price'];?> Rs./day.</p>
+                                <p>No:of rooms: <?php echo $data['numroom'];?></p>
                             </div>
                             </div>
                         </div>

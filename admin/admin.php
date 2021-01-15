@@ -62,7 +62,7 @@
                         <div class="content">
                             
                             <li><a href="show_book.php">Show All Booked Rooms</a> </li>
-
+                            <li><a href="checkout.php">checkout</a> </li>
                         </div>
                     </div>
                 </div>

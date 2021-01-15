@@ -15,7 +15,19 @@ $b_id = $_GET['b_id'];
     <title>Admin Panel</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script type="text/javascript">
+	$(document).ready(function(){
+		$('#dt').change(function(){
+			
+				if($('#dt').val()<"<?php echo date('Y-m-d'); ?>"){ 
+					alert('Invalid Date');
+					$('#dt').val('');
+				}
+				});
+    
+    }); 
+</script>
 </head>
 <body>
     <header>
@@ -53,7 +65,7 @@ $b_id = $_GET['b_id'];
                             </div>
                             <div class="form-group">
                                 <label>Expiration date:</label>
-                                <input type="date" class="form-control" name="exp" required>
+                                <input type="date" class="form-control" name="exp" id="dt" required>
                             </div>
                             
            

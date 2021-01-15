@@ -26,7 +26,7 @@
             <button class="navbar-toggler" type="button"data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button> 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav">
-
+                    
                     <li class="navbar-item active">
                         <a class="nav-link" href="admin.php">Admin</a>
                     </li>
@@ -43,33 +43,69 @@
     <section>
         <div class="container mb-5">
             <?php
-                $qry="SELECT * FROM `add_room`;";
+            $date=date("Y-m-d");
+                $qry="SELECT * FROM `book` WHERE `checkout`= '$date'";
                 $run=mysqli_query($conn,$qry);
                 if(mysqli_num_rows($run)>0){
                     while($data=mysqli_fetch_assoc($run)){
                         ?><div class="row mt-3">
                     <div class="col-9">
                         <div class="bg p-4 rounded width_cont">
-                            <h5 class="text_clr"><?php echo $data['roomtype'];?></h5>
+                        <h5 class="text_clr"><?php echo $data['category'];?></h5>
                             <hr class="bg-white">
                             <div class="content">
-                                <p>No of Beds: <?php echo $data['numbed'];?> <?php echo $data['bedtype'];?>  bed.</p>
-                                <p>Facilities: <?php echo $data['facility'];?>.</p>
-                                <p>Price: <?php echo $data['price'];?> Rs/day.</p>
+                                <p>Check In: <?php echo $data['checkin'];?></p>
+                                <p>Check Out: <?php echo $data['checkout'];?></p>
+                                <p>Name: <?php echo $data['name'];?></p>
+                                <p>Category: <?php echo $data['category'];?></p>
+                                <p>Phone No.: <?php echo $data['phone'];?></p>
+                                <p>No. of room: <?php echo $data['room'];?></p>
+
+                                <p>Booking Condition: <?php echo $data['status'];?></p>
                             </div>
                             </div>
                         </div>
                         <div class="col-3 ">
-                            <a href="edit.php?id=<?php echo $data['id']; ?>"><button class="btn btn-primary ">Edit</button></a>
+                        <a href="checkout.php?check=<?php echo $data['category']; ?>&room=<?php echo $data['room'];?>&b_id=<?php echo $data['b_id']; ?>" class="btn btn-primary ">Checkout</a>
                         </div>
                     
                     </div>
-                            <?php
-                        }
+                  <?php  }
                 }
                 else{
                     echo "No Rooms";
+                }?>
+                    <?php
+                    if(isset($_GET['check'])){
+                        $category=$_GET['check'];
+                        $room=$_GET['room'];
+                        $b_id=$_GET['b_id'];
+                        echo $category;
+                        $select= "SELECT `numroom` FROM `add_room` where `roomtype`='$category'";
+                        $run=mysqli_query($conn,$select);
+                        while($row=mysqli_fetch_assoc($run)){
+                            $numroom=$row['numroom'];}
+                        if($run){
+                    
+                            $qry="UPDATE `add_room` SET `numroom`=$numroom+$room where `roomtype`='$category'" ;
+                            $runs=mysqli_query($conn,$qry);
+                            if($runs){
+                            
+                                $qry1="DELETE FROM `book` WHERE `b_id`='$b_id' ";
+                                $run1=mysqli_query($conn,$qry1);
+                                if($run1){
+                                    header('location:checkout.php');
+                                }
+                                
+                            }
+                        
+
+                    }
                 }
+                    ?>
+                            <?php
+                        
+
             ?>
         </div>
     </section>
