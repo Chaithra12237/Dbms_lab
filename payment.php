@@ -6,6 +6,7 @@ include 'db.php';
      echo"";
 }   */  
 $b_id = $_GET['b_id'];
+$type =$_GET['type'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -96,8 +97,8 @@ if(isset($_POST['book'])){
     }
     else{
 
-
-       echo "<script> alert('Your Booking id is:$b_id');</script>";
+        header("Location: print_app.php?b_id=$b_id&type=$type");
+       //echo "<script> alert('Your Booking id is:$b_id');</script>";
         }
     }
 

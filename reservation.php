@@ -70,7 +70,7 @@ $type=$_GET['roomtype'];
                         
                             <form action="" method="post">
                             
-                                <p>Room type : <input type="text" name="type" value="<?php echo $type;?>"></p>
+                            
                             
  
                               <p>Check In :  <span style="visibility:hidden" >a</span> <input  type="date" name="in" id="dt" required="required"></p>
